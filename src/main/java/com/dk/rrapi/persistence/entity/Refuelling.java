@@ -33,4 +33,6 @@ public class Refuelling {
     @Enumerated(EnumType.STRING)
     @Column(name="fuel_type")
     private FuelType fuelType;
+    @ManyToOne()
+    private RefuellingPerson refuellingPerson;
 }

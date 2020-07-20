@@ -24,4 +24,5 @@ public class RefuellingReqDTO {
     private Double odometerReading;
     @NotNull(message = "fuelType must be provided")
     private FuelType fuelType;
+    private Long refuellingPersonId;
 }

@@ -1,5 +1,7 @@
 package com.dk.rrapi.dto.response;
 
+import com.dk.rrapi.dto.request.RefuellingPersonReqDTO;
+import com.dk.rrapi.persistence.entity.RefuellingPerson;
 import com.dk.rrapi.persistence.entity.types.FuelType;
 import lombok.*;
 
@@ -17,4 +19,6 @@ public class RefuellingResDTO {
     private BigDecimal amount;
     private Double odometerReading;
     private FuelType fuelType;
+    private RefuellingPersonResDTO refuellingPerson;
+    private BigDecimal cost;
 }

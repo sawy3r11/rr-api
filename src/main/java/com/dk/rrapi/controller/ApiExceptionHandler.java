@@ -3,6 +3,8 @@ package com.dk.rrapi.controller;
 import com.dk.rrapi.dto.response.ApiException;
 import com.dk.rrapi.exception.ArgumentNotValidException;
 import com.dk.rrapi.exception.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +25,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
+    Logger logger = LoggerFactory.getLogger(ApiExceptionHandler.class);
+
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> resourceDontFound(ResourceNotFoundException resourceNotFoundException){
-        return new ResponseEntity<>(resourceNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiException> resourceDontFound(ResourceNotFoundException resourceNotFoundException){
+        ApiException apiException = new ApiException(404, LocalDateTime.now(), resourceNotFoundException.getMessage());
+        logger.error( apiException.toString() );
+        return new ResponseEntity<>(apiException, HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -50,6 +56,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .timeStamp(LocalDateTime.now())
                 .errors(errors)
                 .build();
+        logger.error( argumentNotValidException.toString() );
         return new ResponseEntity<>(argumentNotValidException, status);
 
     }
